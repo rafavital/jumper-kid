@@ -8,9 +8,21 @@ namespace UI
     {
         private CanvasGroup canvasGroup;
 
+        public CanvasGroup CanvasGroup
+        {
+            get
+            {
+                if (canvasGroup)
+                    return canvasGroup;
+                else
+                    return canvasGroup = GetComponent<CanvasGroup>();
+            }
+            set => canvasGroup = value;
+        }
+
         private void Awake()
         {
-            canvasGroup = GetComponent<CanvasGroup>();
+            CanvasGroup = GetComponent<CanvasGroup>();
         }
 
         private void Start()
@@ -24,9 +36,9 @@ namespace UI
 
         public void SetVisibility(bool visible)
         {
-            canvasGroup.alpha = visible ? 1 : 0;
-            canvasGroup.interactable = visible;
-            canvasGroup.blocksRaycasts = visible;
+            CanvasGroup.alpha = visible ? 1 : 0;
+            CanvasGroup.interactable = visible;
+            CanvasGroup.blocksRaycasts = visible;
         }
     }
 }

@@ -38,10 +38,6 @@ namespace Player
         #region UNITY CALLS
         private void OnEnable()
         {
-            if (gameInfo.currentPlayer != this)
-                Destroy(this);
-
-
             PlayerInput.OnChangeHorizontalAxis += HandlePlayerFlip;
             PlayerMovement.OnPlayerCrushed += HandleDeath;
             PlayerMovement.OnStartFalling += HandleStartFalling;
@@ -55,8 +51,7 @@ namespace Player
 
         private void Awake()
         {
-            if (gameInfo.currentPlayer == null)
-                gameInfo.currentPlayer = this;
+            gameInfo.currentPlayer = this;
 
             playerInput = GetComponent<PlayerInput>();
             playerMovement = GetComponent<PlayerMovement>();
@@ -133,6 +128,12 @@ namespace Player
         {
             onPauseGame.Event.Raise(true);
             ChangeState(PlayerStates.DEAD);
+        }
+
+        public void ResetPlayer()
+        {
+            gameInfo.currentPlayer = this;
+            ChangeState(PlayerStates.IDLE);
         }
         #endregion
 

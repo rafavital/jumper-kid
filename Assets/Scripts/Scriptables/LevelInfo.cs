@@ -8,4 +8,11 @@ public class LevelInfo : ScriptableObject
     public Camera mainCamera;
     public Vector2 sceneBounds = Vector2.zero;
     public float startingHeight;
+
+    [ContextMenu("Clear")]
+    private void OnEnable()
+    {
+        currentPlayer = null;
+        mainCamera = null;
+    }
 }

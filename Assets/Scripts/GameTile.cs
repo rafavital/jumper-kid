@@ -21,12 +21,13 @@ public class GameTile : MonoBehaviour
     {
         freeze = false;
         settled = false;
+        rb.isKinematic = false;
         rb.velocity = Vector2.down * descentSpeed;
     }
 
     private void Update()
     {
-        if (!freeze && Mathf.Abs(rb.velocity.y) <= 0.01f && !settled)
+        if (!freeze && !settled && Mathf.Abs(rb.velocity.y) <= 0.01f)
         {
             Settle();
         }

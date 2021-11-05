@@ -12,5 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc6b27e5fca9c4029b15263abc312c1e, type: 3}
   m_Name: LevelInfo
   m_EditorClassIdentifier: 
+  currentPlayer: {fileID: 0}
   mainCamera: {fileID: 0}
-  sceneBounds: {x: 0, y: 0}
+  sceneBounds: {x: 2.8128653, y: 5}
+  startingHeight: 0

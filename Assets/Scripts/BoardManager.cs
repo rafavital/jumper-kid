@@ -19,15 +19,9 @@ public class BoardManager : MonoBehaviour
         GameTile.OnTileSettle -= SpawnNewBlock;
     }
 
-    private void Awake()
-    {
-        spawnWait = new WaitForSeconds(spawnDelay);
-    }
+    private void Awake() => spawnWait = new WaitForSeconds(spawnDelay);
 
-    private void Start()
-    {
-        Invoke(nameof(SpawnNewBlock), 5f);
-    }
+    public void StartSpawning() => Invoke(nameof(SpawnNewBlock), 5f);
 
     private void SpawnNewBlock()
     {
