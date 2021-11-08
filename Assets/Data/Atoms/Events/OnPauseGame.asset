@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _developerDescription: Event that is raised when the game's movement needs to be
     paused.
-  _replayBufferSize: 1
+  _replayBufferSize: 0
   _inspectorRaiseValue: 0

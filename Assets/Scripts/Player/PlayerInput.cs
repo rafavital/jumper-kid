@@ -15,6 +15,12 @@ namespace Player
 
         [HideInInspector] public bool JumpDown;
         [HideInInspector] public bool JumpHeld;
+
+        private bool jumpLastFrame;
+        private bool eventJump;
+        private float eventHorizontal, leftEventHorizontal, rightEventHorizontal;
+
+
         public float HorizontalAxis
         {
             get => Mathf.Abs(_horizontalAxis) > axisDeadzone.x ? _horizontalAxis : 0f;
@@ -29,28 +35,31 @@ namespace Player
             }
         }
         private float _horizontalAxis;
-        public float VerticalAxis
-        {
-            get => Mathf.Abs(_verticalAxis) > axisDeadzone.y ? _verticalAxis : 0f;
-            set
-            {
-                if (value != _verticalAxis)
-                {
-                    OnChangeVerticalAxis?.Invoke(value);
-                }
-
-                _verticalAxis = value;
-            }
-        }
-        private float _verticalAxis;
 
         private void Update()
         {
+            eventHorizontal = rightEventHorizontal - leftEventHorizontal;
+
+#if UNITY_EDITOR
             HorizontalAxis = Input.GetAxisRaw("Horizontal");
-            VerticalAxis = Input.GetAxisRaw("Vertical");
 
             JumpHeld = Input.GetKey(jumpButton);
             JumpDown = Input.GetKeyDown(jumpButton);
+#else
+            HorizontalAxis = eventHorizontal;
+
+            JumpDown = eventJump;
+            JumpHeld = eventJump && jumpLastFrame;
+#endif
         }
+
+        private void LateUpdate()
+        {
+            jumpLastFrame = JumpDown;
+        }
+
+        public void SetRightInput(float value) => rightEventHorizontal = value;
+        public void SetLeftInput(float value) => leftEventHorizontal = value;
+        public void ReceiveJump(bool value) => eventJump = value;
     }
 }

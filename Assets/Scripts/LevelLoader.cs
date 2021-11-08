@@ -1,18 +1,14 @@
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
-public class LevelLoader : MonoBehaviour
+using UnityEngine.SceneManagement;
+public enum LevelId
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    MainMenu = 0,
+    Game = 1
+}
 
-    // Update is called once per frame
-    void Update()
+public static class LevelLoader
+{
+    public static void LoadLevel(LevelId id)
     {
-        
+        SceneManager.LoadScene((int)id);
     }
 }

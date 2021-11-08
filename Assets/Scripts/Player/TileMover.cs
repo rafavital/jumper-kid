@@ -15,11 +15,19 @@ public class TileMover : MonoBehaviour
 
     private void Update()
     {
-#if UNITY_EDITOR
-        if (Input.GetMouseButtonDown(0))
+        Vector2 touchPos = Vector2.zero;
+
+        touchPos = Application.isEditor ? (Vector2)Input.mousePosition : Input.GetTouch(0).position;
+
+        // when touch/click down and up
+        bool down = Application.isEditor && Input.GetMouseButtonDown(0) || Application.isMobilePlatform && Input.GetTouch(0).phase == TouchPhase.Began;
+        bool up = Application.isEditor && Input.GetMouseButtonUp(0) || Application.isMobilePlatform && Input.GetTouch(0).phase == TouchPhase.Ended;
+
+        if (down)
         {
-            Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-            var hit = Physics2D.Raycast(cam.ScreenToWorldPoint(Input.mousePosition), Vector2.zero, float.MaxValue, tileLayer);
+            // raycasts in the given screen position to search for a tile
+            Ray ray = cam.ScreenPointToRay(touchPos);
+            var hit = Physics2D.Raycast(cam.ScreenToWorldPoint(touchPos), Vector2.zero, float.MaxValue, tileLayer);
             if (hit)
             {
                 currentTile = hit.collider.GetComponentInParent<GameTile>();
@@ -35,15 +43,15 @@ public class TileMover : MonoBehaviour
                 OnSetFreezeTile.Event.Raise(false);
             }
         }
-        else if (Input.GetMouseButtonUp(0))
+        else if (up)
         {
+            // cleanup tile when released
             currentTile = null;
             OnSetFreezeTile.Event.Raise(false);
         }
-#endif
 
         if (currentTile)
-            currentTile.SetPosition(cam.ScreenToWorldPoint(Input.mousePosition));
+            currentTile.SetPosition(cam.ScreenToWorldPoint(touchPos));
     }
 
 

@@ -8,33 +8,37 @@ public class CameraController : MonoBehaviour
     [SerializeField] LevelInfo levelInfo;
     [SerializeField] private FloatConstant startMovingHeight;
 
-    private bool moving;
+    private bool startedMoving, isMoving;
     private bool canMove;
-    private void Start()
+    private float targetStartY;
+    private void Awake()
     {
-        moving = false;
         levelInfo.mainCamera = Camera.main;
         levelInfo.sceneBounds = new Vector2(levelInfo.mainCamera.orthographicSize * levelInfo.mainCamera.aspect, levelInfo.mainCamera.orthographicSize);
+        isMoving = false;
+        startedMoving = false;
     }
 
     private void Update()
     {
         //TODO: remove this hardcoded value
-        if (!moving && target.position.y > startMovingHeight.Value)
+        if (!startedMoving && target.position.y - targetStartY > startMovingHeight.Value)
+        {
             StartMoving();
+            startedMoving = true;
+        }
 
-        if (moving)
+        if (isMoving)
             transform.position += Vector3.up * moveSpeed * Time.deltaTime;
     }
 
-    [ContextMenu("StartMoving")]
-    private void StartMoving()
+    public void HandleStartGame()
     {
-        moving = true;
+        targetStartY = target.position.y;
     }
 
-    public void StopMoving()
-    {
-        moving = false;
-    }
+    [ContextMenu("StartMoving")]
+    private void StartMoving() => isMoving = true;
+
+    public void StopMoving() => isMoving = false;
 }

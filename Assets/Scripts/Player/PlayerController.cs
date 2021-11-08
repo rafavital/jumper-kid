@@ -19,17 +19,19 @@ namespace Player
     {
         [SerializeField] private float knockback = 25f;
         [SerializeField] private float stunDuration;
+
         [Header("Data")]
         [SerializeField] private LevelInfo gameInfo;
         [SerializeField] private VoidBaseEventReference onGameOverEvent;
         [SerializeField] private BoolEventReference onPauseGame;
 
-        //TODO: improve this by making a Finite State Machine for the player
-        private PlayerStates currentState;
+        //TODO: improve this by making a better Finite State Machine for the player
+        [SerializeField] private PlayerStates currentState;
         private PlayerMovement playerMovement;
         private PlayerAnimationController animationController;
         private PlayerInput playerInput;
         private PlayerVFX playerVFX;
+        private PlayerAudioManager playerAudio;
         private HealthController healthController;
 
         private Coroutine stunCoroutine;
@@ -58,6 +60,7 @@ namespace Player
             animationController = GetComponent<PlayerAnimationController>();
             playerVFX = GetComponent<PlayerVFX>();
             healthController = GetComponent<HealthController>();
+            playerAudio = GetComponent<PlayerAudioManager>();
 
 
             currentState = PlayerStates.IDLE;
@@ -76,6 +79,7 @@ namespace Player
                     break;
                 case PlayerStates.RUNNING:
                     RunningBehaviour();
+                    playerAudio.PlayWalkSound();
 
                     break;
                 case PlayerStates.AIRBORNE:
@@ -113,8 +117,10 @@ namespace Player
             ChangeState(PlayerStates.HURT);
             playerMovement.ZeroVelocity();
 
-            Vector2 knockbackDir = new Vector2(-movingDir, 1.25f); // makes the player knockback backwards and upwards
-            playerMovement.AddForce(knockbackDir * knockback, ForceMode2D.Impulse);
+            // Vector2 knockbackDir = new Vector2(-movingDir, 1.25f); // makes the player knockback backwards and upwards
+            // playerMovement.AddForce(knockbackDir * knockback, ForceMode2D.Impulse);
+
+            playerAudio.PlayHeadHit();
 
             if (stunCoroutine != null)
                 StopCoroutine(stunCoroutine);
@@ -128,11 +134,14 @@ namespace Player
         {
             onPauseGame.Event.Raise(true);
             ChangeState(PlayerStates.DEAD);
+            playerAudio.PlayHeadHit();
         }
 
         public void ResetPlayer()
         {
             gameInfo.currentPlayer = this;
+            // if (transform.position.y <= gameInfo.mainCamera.transform.position.y - gameInfo.sceneBounds.y / 2)
+            transform.position = new Vector3(gameInfo.mainCamera.transform.position.x, gameInfo.mainCamera.transform.position.y - 2.5f, 0);
             ChangeState(PlayerStates.IDLE);
         }
         #endregion
@@ -173,6 +182,7 @@ namespace Player
             {
                 case PlayerStates.IDLE:
                     playerMovement.ZeroVelocity();
+                    animationController.StopTransition();
                     animationController.PlayAnimation(PlayerAnimationController.animIdle);
 
                     break;
@@ -182,10 +192,12 @@ namespace Player
 
                     break;
                 case PlayerStates.RUNNING:
+                    animationController.StopTransition();
                     animationController.PlayAnimation(PlayerAnimationController.animRun);
 
                     break;
                 case PlayerStates.DEAD:
+                    animationController.StopTransition();
                     animationController.PlayAnimation(PlayerAnimationController.animDeath)
                                         .OnComplete(() => onGameOverEvent.Event.Raise());
 
@@ -194,9 +206,7 @@ namespace Player
         }
 
         /// <summary> Deals with the cleanup of the current state </summary>
-        private void ExitState()
-        {
-        }
+        private void ExitState() { }
 
         private void HandlePlayerFlip(float dir)
         {
@@ -216,6 +226,8 @@ namespace Player
         {
             animationController.PlayAnimationTransition(new AnimationObject(PlayerAnimationController.animBeginJump),
                                                         new AnimationObject(PlayerAnimationController.animJump));
+            playerAudio.PlayJumpSound();
+
             ChangeState(PlayerStates.AIRBORNE);
         }
 

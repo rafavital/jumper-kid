@@ -9,6 +9,8 @@ public class LevelInfo : ScriptableObject
     public Vector2 sceneBounds = Vector2.zero;
     public float startingHeight;
 
+    public void SetStartingHeight(float value) => startingHeight = value;
+
     [ContextMenu("Clear")]
     private void OnEnable()
     {

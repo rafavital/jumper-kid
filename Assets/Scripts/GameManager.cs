@@ -1,5 +1,6 @@
 using UnityEngine;
 using UnityAtoms.BaseAtoms;
+using UnityEngine.Analytics;
 
 public class GameManager : MonoBehaviour
 {
@@ -19,7 +20,12 @@ public class GameManager : MonoBehaviour
     private void Start()
     {
         if (gameInfo.startingHeight > 0)
-            SetStartingPlatform(new Vector3(0, gameInfo.startingHeight, 0));
+        {
+            gameInfo.mainCamera.transform.position = Vector3.up * gameInfo.startingHeight + Vector3.forward * gameInfo.mainCamera.transform.position.z;
+            gameInfo.currentPlayer.ResetPlayer();
+            var platformPos = gameInfo.currentPlayer.transform.position - Vector3.up * 0.5f;
+            SetStartingPlatform(platformPos);
+        }
         else
             startingPlatform.gameObject.SetActive(false);
 

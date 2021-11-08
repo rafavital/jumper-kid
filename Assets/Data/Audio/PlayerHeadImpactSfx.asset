@@ -1,0 +1,27 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 920a1d89b31ec16d88587fd854b98728, type: 3}
+  m_Name: PlayerHeadImpactSfx
+  m_EditorClassIdentifier: 
+  clips:
+  - {fileID: 8300000, guid: 6355944cb6017909fad8d18032e863fd, type: 3}
+  - {fileID: 8300000, guid: 61098515e16c46978aa46fd93a88ad6f, type: 3}
+  - {fileID: 8300000, guid: e4e679364100c9c35aea0131473ada13, type: 3}
+  - {fileID: 8300000, guid: 11e5099e79f70d53e8e9723ad9f3dcff, type: 3}
+  - {fileID: 8300000, guid: 3a696c49b6f6c522086501db8a7a7bb2, type: 3}
+  playOnAwake: 0
+  loop: 0
+  volume: 1
+  volumeVariance: 0
+  pitch: 1
+  pitchVariance: 0.3
+  playDelay: 0.1

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 708376110c05a4e20b0ce756930c3bb0, type: 3}
   m_Name: StartCameraMovementHeight
   m_EditorClassIdentifier: 
-  _developerDescription: 
+  _developerDescription: Distance from the player's starting height where the camera
+    starts moving.
   _id: 
-  _value: 5
+  _value: 4

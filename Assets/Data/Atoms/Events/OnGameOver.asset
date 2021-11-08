@@ -13,4 +13,4 @@ MonoBehaviour:
   m_Name: OnGameOver
   m_EditorClassIdentifier: 
   _developerDescription: Event that calls GameOver procedures throughout the game.
-  _replayBufferSize: 1
+  _replayBufferSize: 0

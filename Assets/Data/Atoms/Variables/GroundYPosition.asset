@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 708376110c05a4e20b0ce756930c3bb0, type: 3}
   m_Name: GroundYPosition
   m_EditorClassIdentifier: 
-  _developerDescription: 
+  _developerDescription: Position of the game's ground, to be referenced in code
   _id: 
-  _value: 1.3
+  _value: 2

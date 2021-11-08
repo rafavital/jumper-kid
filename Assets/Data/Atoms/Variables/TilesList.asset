@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ba615354262bb46d7add759502baf53f, type: 3}
   m_Name: TilesList
   m_EditorClassIdentifier: 
-  _developerDescription: 
+  _developerDescription: List of all runtime tiles
   Cleared: {fileID: 0}
   _startCleared: 1
   Added: {fileID: 0}
