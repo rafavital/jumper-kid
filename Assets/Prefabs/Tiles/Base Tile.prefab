@@ -46,6 +46,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 587b5e7e8301c1b0e81674bfcbab1d41, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gameInfo: {fileID: 11400000, guid: 56e027bfcdf3fe0e4ae87809ae83d214, type: 2}
   descentSpeed: 1
 --- !u!50 &648475283898185649
 Rigidbody2D:

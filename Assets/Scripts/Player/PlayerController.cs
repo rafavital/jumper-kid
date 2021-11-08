@@ -83,13 +83,19 @@ namespace Player
 
                     break;
                 case PlayerStates.AIRBORNE:
-                    if (playerMovement.GetVelocity().y <= 0 && playerMovement.IsGrounded)
+                    if (playerMovement.GetVelocity().y <= 0.1f && playerMovement.IsGrounded)
                     {
-                        if (playerInput.HorizontalAxis == 0)
-                            ChangeState(PlayerStates.IDLE);
-                        else
+                        // land
+                        playerVFX.Stretch(0.2f, 0.5f);
+
+                        if (Mathf.Abs(playerInput.HorizontalAxis) > 0.1f)
+                        {
                             ChangeState(PlayerStates.RUNNING);
+                        }
+                        else
+                            ChangeState(PlayerStates.IDLE);
                     }
+
                     playerMovement.ApplyGravity(playerInput.JumpHeld);
 
                     break;
@@ -227,6 +233,7 @@ namespace Player
             animationController.PlayAnimationTransition(new AnimationObject(PlayerAnimationController.animBeginJump),
                                                         new AnimationObject(PlayerAnimationController.animJump));
             playerAudio.PlayJumpSound();
+            playerVFX.Squash(0.2f, 0.5f);
 
             ChangeState(PlayerStates.AIRBORNE);
         }

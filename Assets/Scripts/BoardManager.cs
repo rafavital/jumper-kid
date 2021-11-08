@@ -1,11 +1,15 @@
 using System.Collections;
 using UnityEngine;
+using UnityAtoms.BaseAtoms;
 
 public class BoardManager : MonoBehaviour
 {
     [SerializeField] private float spawnDelay = 5f;
     [SerializeField] private GameTile[] allTiles;
     [SerializeField] private Transform spawnPos;
+    [SerializeField] private Transform checkForTilePos;
+    [SerializeField] private LayerMask tileLayer;
+    [SerializeField] private VoidBaseEventReference onCameraStartMoving;
     private Coroutine spawnCoroutine;
     private WaitForSeconds spawnWait;
 
@@ -25,7 +29,15 @@ public class BoardManager : MonoBehaviour
 
     private void SpawnNewBlock()
     {
-        Instantiate(allTiles[Random.Range(0, allTiles.Length)], spawnPos.position, Quaternion.identity, transform);
+        // if there is no space for another block, start moving the camera (if it isn't already) and try again in 5 seconds
+        if (Physics2D.OverlapBox(checkForTilePos.position, new Vector2(checkForTilePos.localScale.x, checkForTilePos.localScale.y), 0, tileLayer))
+        {
+            onCameraStartMoving.Event.Raise();
+            Invoke(nameof(SpawnNewBlock), 5f);
+            return;
+        }
+
+        Instantiate(allTiles[Random.Range(0, allTiles.Length)], spawnPos.position, Quaternion.Euler(0, 0, 90 * Mathf.RoundToInt(Random.Range(0, 4))), transform);
     }
 
     private IEnumerator SpawnTimer()

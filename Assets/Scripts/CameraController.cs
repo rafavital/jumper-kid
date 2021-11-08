@@ -38,7 +38,8 @@ public class CameraController : MonoBehaviour
     }
 
     [ContextMenu("StartMoving")]
-    private void StartMoving() => isMoving = true;
+    public void StartMoving() => isMoving = true;
 
+    [ContextMenu("StartMoving")]
     public void StopMoving() => isMoving = false;
 }

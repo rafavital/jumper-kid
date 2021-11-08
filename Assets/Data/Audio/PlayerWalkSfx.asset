@@ -12,11 +12,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 920a1d89b31ec16d88587fd854b98728, type: 3}
   m_Name: PlayerWalkSfx
   m_EditorClassIdentifier: 
-  clips: []
+  clips:
+  - {fileID: 8300000, guid: 5a1f5dfe7afed1fba83b8251bcdeb025, type: 3}
+  - {fileID: 8300000, guid: 6f6631214c3d32249ac87c21fce5faf1, type: 3}
+  - {fileID: 8300000, guid: a1fa2069de3f3eacc9e8d64e8fde1518, type: 3}
+  - {fileID: 8300000, guid: 7b8f8a2049f1107d682709f51aa60a15, type: 3}
+  - {fileID: 8300000, guid: 26d488418dd0aabc9a252771447c5d54, type: 3}
   playOnAwake: 0
   loop: 0
-  volume: 1
-  volumeVariance: 0
+  volume: 0.6
+  volumeVariance: 0.3
   pitch: 1
-  pitchVariance: 0
-  playDelay: 0.1
+  pitchVariance: 0.5
+  playDelay: 0.2
