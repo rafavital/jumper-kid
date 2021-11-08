@@ -8,13 +8,12 @@ using Random = UnityEngine.Random;
 public class GameTile : MonoBehaviour
 {
     public static event Action OnTileSettle;
-    private static event Action OnFreeze;
 
     [SerializeField] private LevelInfo gameInfo;
     [SerializeField] private float descentSpeed = 1f;
 
     private Rigidbody2D rb;
-    private bool settled;
+    public bool settled { get; private set; }
     private bool freeze;
     private bool startedMoving;
     private float myWidth;

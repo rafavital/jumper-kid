@@ -103,10 +103,7 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
         // Use the error details to determine whether to try to load another ad.
     }
 
-    public void OnUnityAdsShowStart(string adUnitId)
-    {
-        Debug.Log($"Showing ad: {adUnitId}");
-    }
+    public void OnUnityAdsShowStart(string adUnitId) { }
     public void OnUnityAdsShowClick(string adUnitId) { }
 
     public void OnUnityAdsReady(string placementId) { }
@@ -117,7 +114,6 @@ public class RewardedAdsButton : MonoBehaviour, IUnityAdsLoadListener, IUnityAds
 
     public void OnUnityAdsDidFinish(string placementId, ShowResult showResult)
     {
-        print(placementId);
         if (showResult == ShowResult.Failed)
         {
             if (debug)

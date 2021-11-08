@@ -36,6 +36,7 @@ namespace Player
 
         private Coroutine stunCoroutine;
 
+        private Vector3 startingPos;
 
         #region UNITY CALLS
         private void OnEnable()
@@ -64,6 +65,8 @@ namespace Player
 
 
             currentState = PlayerStates.IDLE;
+
+            startingPos = transform.position;
         }
 
         private void Update()
@@ -147,7 +150,9 @@ namespace Player
         {
             gameInfo.currentPlayer = this;
             // if (transform.position.y <= gameInfo.mainCamera.transform.position.y - gameInfo.sceneBounds.y / 2)
-            transform.position = new Vector3(gameInfo.mainCamera.transform.position.x, gameInfo.mainCamera.transform.position.y - 2.5f, 0);
+
+            if (Vector2.Distance(transform.position, startingPos) > 0.5f || gameInfo.startingHeight != 0)
+                transform.position = new Vector3(gameInfo.mainCamera.transform.position.x, gameInfo.mainCamera.transform.position.y - 2.5f, 0);
             ChangeState(PlayerStates.IDLE);
         }
         #endregion

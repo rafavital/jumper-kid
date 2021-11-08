@@ -189,6 +189,9 @@ namespace Player
             {
                 // even though the project supports a data oriented event system, this is such a specfic call that it doesn't need a data event
                 OnPlayerCrushed?.Invoke();
+
+                // var tile = other.gameObject.GetComponentInParent<GameTile>(); //FIXME: create an event to avoid this dependency
+                // if (tile && !tile.settled)
             }
         }
     }
